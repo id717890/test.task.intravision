@@ -12,6 +12,7 @@ namespace drinks.dal
         }
 
         public DbSet<Drink> Files { get; set; }
+        public DbSet<Coin> Coins { get; set; }
         public DrinkContext() : base("DefaultConnection")
         { }
 
@@ -20,6 +21,7 @@ namespace drinks.dal
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Configurations.Add(new DrinkMap());
+            modelBuilder.Configurations.Add(new CoinMap());
         }
     }
 }

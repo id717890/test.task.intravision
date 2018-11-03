@@ -1,10 +1,10 @@
 ﻿namespace drinks.domain.@interface.entities
 {
-    public class Drink: Entity
+    public class Coin: Entity
     {
         public string Caption { get; set; }
-        public string Image { get; set; }
-        public int Cost { get; set; }
+        public int Value { get; set; }
         public int Count { get; set; }
+        public bool IsAllowed { get; set; }
     }
 }
