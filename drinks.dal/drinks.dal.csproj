@@ -49,9 +49,9 @@
   <ItemGroup>
     <Compile Include="DrinkContext.cs" />
     <Compile Include="mapping\DrinkMap.cs" />
-    <Compile Include="Migrations\201811030656473_MigrateDB.cs" />
-    <Compile Include="Migrations\201811030656473_MigrateDB.Designer.cs">
-      <DependentUpon>201811030656473_MigrateDB.cs</DependentUpon>
+    <Compile Include="Migrations\201811030718044_MigrateDB1.cs" />
+    <Compile Include="Migrations\201811030718044_MigrateDB1.Designer.cs">
+      <DependentUpon>201811030718044_MigrateDB1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -70,8 +70,8 @@
     <Folder Include="services\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201811030656473_MigrateDB.resx">
-      <DependentUpon>201811030656473_MigrateDB.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201811030718044_MigrateDB1.resx">
+      <DependentUpon>201811030718044_MigrateDB1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

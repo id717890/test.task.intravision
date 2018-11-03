@@ -3,7 +3,7 @@ namespace drinks.dal.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class MigrateDB : DbMigration
+    public partial class MigrateDB1 : DbMigration
     {
         public override void Up()
         {
@@ -11,13 +11,13 @@ namespace drinks.dal.Migrations
                 "dbo.Drinks",
                 c => new
                     {
-                        Id = c.Long(nullable: false, identity: true),
-                        Caption = c.String(),
-                        Image = c.String(),
-                        Cost = c.Int(nullable: false),
+                        id = c.Long(nullable: false, identity: true),
+                        caption = c.String(),
+                        image = c.String(),
+                        cost = c.Int(nullable: false),
                         IsDeleted = c.Boolean(nullable: false),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.id);
             
         }
         
