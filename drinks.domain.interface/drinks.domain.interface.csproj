@@ -43,6 +43,7 @@
     <Compile Include="entities\Coin.cs" />
     <Compile Include="entities\Drink.cs" />
     <Compile Include="entities\Entity.cs" />
+    <Compile Include="entities\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="services\IDrinkService.cs" />
   </ItemGroup>

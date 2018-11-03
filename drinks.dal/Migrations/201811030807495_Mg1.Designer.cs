@@ -13,7 +13,7 @@ namespace drinks.dal.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201811030759233_Mg1"; }
+            get { return "201811030807495_Mg1"; }
         }
         
         string IMigrationMetadata.Source

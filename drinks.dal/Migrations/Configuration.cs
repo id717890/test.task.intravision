@@ -1,11 +1,7 @@
-using drinks.domain.@interface.entities;
-
 namespace drinks.dal.Migrations
 {
-    using System;
-    using System.Data.Entity;
+    using domain.@interface.entities;
     using System.Data.Entity.Migrations;
-    using System.Linq;
 
     internal sealed class Configuration : DbMigrationsConfiguration<drinks.dal.DrinkContext>
     {
@@ -32,6 +28,11 @@ namespace drinks.dal.Migrations
                 new Coin { Id = 2, Caption = "2 рубля", Count = 3, IsAllowed = true, IsDeleted = false, Value = 2 },
                 new Coin { Id = 5, Caption = "5 рублей", Count = 3, IsAllowed = true, IsDeleted = false, Value = 5 },
                 new Coin { Id = 10, Caption = "10 рублей", Count = 5, IsAllowed = true, IsDeleted = false, Value = 10}
+            );
+            context.SaveChanges();
+
+            context.Users.AddOrUpdate(
+                new User { Id = 1, IsDeleted = false, Name = "Admin", SecretKey = "secret12345"}
             );
             context.SaveChanges();
 

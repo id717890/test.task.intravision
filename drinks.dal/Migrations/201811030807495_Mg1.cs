@@ -8,6 +8,19 @@ namespace drinks.dal.Migrations
         public override void Up()
         {
             CreateTable(
+                "dbo.Coins",
+                c => new
+                    {
+                        id = c.Long(nullable: false, identity: true),
+                        caption = c.String(nullable: false),
+                        value = c.Int(nullable: false),
+                        count = c.Int(nullable: false),
+                        is_allowed = c.Boolean(nullable: false),
+                        IsDeleted = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.id);
+            
+            CreateTable(
                 "dbo.Drinks",
                 c => new
                     {
@@ -21,14 +34,12 @@ namespace drinks.dal.Migrations
                 .PrimaryKey(t => t.id);
             
             CreateTable(
-                "dbo.Coins",
+                "dbo.Users",
                 c => new
                     {
                         id = c.Long(nullable: false, identity: true),
-                        caption = c.String(nullable: false),
-                        value = c.Int(nullable: false),
-                        count = c.Int(nullable: false),
-                        is_allowed = c.Boolean(nullable: false),
+                        name = c.String(nullable: false),
+                        secret = c.String(nullable: false),
                         IsDeleted = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.id);
@@ -37,8 +48,9 @@ namespace drinks.dal.Migrations
         
         public override void Down()
         {
-            DropTable("dbo.Coins");
+            DropTable("dbo.Users");
             DropTable("dbo.Drinks");
+            DropTable("dbo.Coins");
         }
     }
 }
