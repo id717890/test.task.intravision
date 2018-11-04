@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace drinks.infrastructure.@interface
+namespace drinks.infrastructure.Request
 {
-    public class Class1
+    public class DefaultRequest: BaseRequest
     {
     }
 }

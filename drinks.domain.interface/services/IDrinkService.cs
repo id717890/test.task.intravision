@@ -7,7 +7,7 @@
     {
         IEnumerable<Drink> GetAllDrinks();
         Drink GetDrinkById(long id);
-        Drink Create(string caption, string image, int cost);
+        Drink Create(string caption, string image, int cost, int count);
         void Update(Drink drink);
         void Delete(long id);
     }

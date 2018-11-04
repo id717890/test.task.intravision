@@ -11,7 +11,7 @@ namespace drinks.dal
             return base.Set<TEntity>();
         }
 
-        public DbSet<Drink> Files { get; set; }
+        public DbSet<Drink> Drinks { get; set; }
         public DbSet<Coin> Coins { get; set; }
         public DbSet<User> Users { get; set; }
         public DrinkContext() : base("DefaultConnection")

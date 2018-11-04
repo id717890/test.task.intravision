@@ -1,0 +1,70 @@
+﻿@model drinks.web.Models.DrinkViewModel.DrinkList
+@{
+    ViewBag.Title = "Drinks";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Напитки</h2>
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="form-group">
+            <a href="@Url.Action("CreateDrink", "Admin")" class="btn btn-lg btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Добавить напиток</a>
+        </div>
+
+        @if (TempData["success"] != null)
+        {
+            <div class="alert alert-success">
+                <p>@TempData["success"].ToString()</p>
+            </div>
+        }
+        @if (TempData["errors"] != null)
+        {
+            <div class="alert alert-danger">
+                <p>@TempData["errors"].ToString()</p>
+            </div>
+        }
+        <table class="table table-condensed table-hover table-responsive table-striped" id="demands">
+            <colgroup>
+                <col class="width-30" />
+                <col />
+                <col class="width-50" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Наименование напитка</th>
+                    <th>Цена</th>
+                    <th>Кол-во</th>
+                    <th>Изображение</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Drinks.Any())
+                {
+                    var i = 1;
+                    foreach (var drink in Model.Drinks)
+                    {
+                        <tr>
+                            <td>@i</td>
+                            <td>@drink.Caption</td>
+                            <td>@drink.Cost</td>
+                            <td>@drink.Count</td>
+                            <td><img src="@drink.Image" height="100"/></td>
+                            <td>
+                                <a href="@Url.Action("EditDrink", "Admin", new {id = drink.Id, version = 0})" title="Редактировать"><i class="fa fa-pencil-alt fa-lg"></i></a>
+                                <a href="@Url.Action("DeleteDrink", "Admin", new {id = drink.Id })" title="Удалить" style="color: red"><i class="fa fa-times fa-lg"></i></a>
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                }
+                else
+                {
+                    <tr><td colspan="3" style="text-align: center">Напитки отсутствуют</td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

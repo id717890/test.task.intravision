@@ -43,11 +43,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="CompositModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="services\DrinkService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\drinks.dal.interace\drinks.dal.interface.csproj">
+      <Project>{731F2000-629A-40AA-A525-47AB07E59C1B}</Project>
+      <Name>drinks.dal.interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\drinks.domain.interface\drinks.domain.interface.csproj">
+      <Project>{6C05D165-4DF6-4239-84E1-95BF3788C28E}</Project>
+      <Name>drinks.domain.interface</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
