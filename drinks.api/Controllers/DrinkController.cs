@@ -11,21 +11,11 @@ namespace drinks.api.Controllers
     [RoutePrefix("api/drink")]
     public class DrinkController : ApiController
     {
-        //[Inject]
-        //public IDrinkService _drinkService;
-
-        private IDrinkService _drinkService;
+        private readonly IDrinkService _drinkService;
 
         public DrinkController(IDrinkService service)
         {
-            try
-            {
-                _drinkService = service;
-            }
-            catch
-            {
-
-            }
+            _drinkService = service;
         }
 
         [HttpPost]

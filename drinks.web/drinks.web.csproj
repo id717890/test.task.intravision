@@ -173,6 +173,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CoinViewModel.cs" />
     <Compile Include="Models\DrinkViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -243,6 +244,8 @@
     <Content Include="Views\Admin\Drinks.cshtml" />
     <Content Include="Views\Admin\CreateDrink.cshtml" />
     <Content Include="Views\Admin\EditDrink.cshtml" />
+    <Content Include="Views\Admin\Coins.cshtml" />
+    <Content Include="Views\Admin\EditCoin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

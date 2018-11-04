@@ -21,6 +21,115 @@ namespace drinks.web.Controllers
             return View();
         }
 
+        #region HTTP_POST - изменение монеты
+        [HttpPost]
+        public ActionResult EditCoin(CoinViewModel.ParticularCoinModel model)
+        {
+            //Проверяем модель на валидность
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            try
+            {
+                CoinRequest.EditCoin request = new CoinRequest.EditCoin
+                {
+                    Id = model.Id,
+                    Count = model.Count,
+                    IsAllowed = model.IsAllowed
+                };
+                HttpResponseMessage result = HttpService.PostAsync("api/coin/SaveCoin", request).Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var response = result.Content.ReadAsAsync<DefaultResponse>().Result;
+                    if (response.ErrorCode == 0 && string.IsNullOrEmpty(response.Message))
+                    {
+                        TempData["success"] = "Данные по монете успешно изменены";
+                    }
+                }
+                else
+                {
+                    TempData["error"] = "Ошибка сохранения данных";
+                }
+            }
+            catch (Exception e)
+            {
+                TempData["error"] = e.Message;
+            }
+            return RedirectToAction("Coins", "Admin");
+        }
+        #endregion
+
+        #region HTTP_GET - страница редактирования монеты
+        [HttpGet]
+        public ActionResult EditCoin(int id)
+        {
+            try
+            {
+                CoinRequest.FindCoinById request = new CoinRequest.FindCoinById
+                {
+                    Id = id
+                };
+                HttpResponseMessage result = HttpService.PostAsync("api/coin/GetCoinById", request).Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var response = result.Content.ReadAsAsync<CoinResponse.ParticularCoin>().Result;
+                    if (response.ErrorCode == 0 && string.IsNullOrEmpty(response.Message))
+                    {
+                        return View(new CoinViewModel.ParticularCoinModel
+                        {
+                            Id = response.Coin.Id,
+                            Caption = response.Coin.Caption,
+                            Count = response.Coin.Count,
+                            IsAllowed= response.Coin.IsAllowed
+                        });
+                    }
+                }
+            }
+            catch
+            {
+                return View();
+            }
+            return View();
+
+        }
+        #endregion
+
+        #region Страница управления монетами
+        public ActionResult Coins()
+        {
+            CoinResponse.CoinsListResponse response = new CoinResponse.CoinsListResponse();
+            try
+            {
+                HttpResponseMessage result = HttpService.PostAsync("api/coin/GetCoins", new DefaultRequest()).Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    response = result.Content.ReadAsAsync<CoinResponse.CoinsListResponse>().Result;
+                    if (response.ErrorCode == 0 && string.IsNullOrEmpty(response.Message))
+                    {
+                        CoinViewModel.CoinList coins = new CoinViewModel.CoinList
+                        {
+                            Coins = response.Coins
+                        };
+                        return View(coins);
+                    }
+                }
+                response.ErrorCode = 10;
+                response.Message = "Ошибка получения данных";
+            }
+            catch (Exception ex)
+            {
+                response.ErrorCode = 2;
+                response.Message = ex.Message;
+            }
+            return View(); ;
+        }
+        #endregion 
+
+
+
+        #region НАПИТКИ
+        #region HTTP_GET - Удаление напитка
         [HttpGet]
         public ActionResult RemoveDrink(long id, string caption)
         {
@@ -36,7 +145,7 @@ namespace drinks.web.Controllers
                     var response = result.Content.ReadAsAsync<DefaultResponse>().Result;
                     if (response.ErrorCode == 0 && string.IsNullOrEmpty(response.Message))
                     {
-                        TempData["success"] = "Напиток '"+ caption +"' успешно удален";
+                        TempData["success"] = "Напиток '" + caption + "' успешно удален";
                     }
                 }
                 else
@@ -50,7 +159,9 @@ namespace drinks.web.Controllers
             }
             return RedirectToAction("Drinks", "Admin");
         }
+        #endregion
 
+        #region HTTP_POST - изменение напитка
         [HttpPost]
         public ActionResult EditDrink(DrinkViewModel.ParticularDrinkModel model)
         {
@@ -74,7 +185,7 @@ namespace drinks.web.Controllers
 
                 DrinkRequest.EditDrink request = new DrinkRequest.EditDrink
                 {
-                    Id =  model.Id,
+                    Id = model.Id,
                     Caption = model.Caption,
                     Image = model.Image,
                     Count = model.Count,
@@ -100,9 +211,9 @@ namespace drinks.web.Controllers
             }
             return RedirectToAction("Drinks", "Admin");
         }
+        #endregion
 
-
-
+        #region HTTP_GET - страница редактирования напитка
         [HttpGet]
         public ActionResult EditDrink(int id)
         {
@@ -136,7 +247,9 @@ namespace drinks.web.Controllers
             return View();
 
         }
+        #endregion
 
+        #region Создание напитка
         [HttpPost]
         public ActionResult CreateDrink(DrinkViewModel.NewDrink model)
         {
@@ -157,7 +270,7 @@ namespace drinks.web.Controllers
                 DrinkRequest.CreateDrink request = new DrinkRequest.CreateDrink
                 {
                     Caption = model.Caption,
-                    Image =  model.Image,
+                    Image = model.Image,
                     Count = model.Count,
                     Cost = model.Cost
                 };
@@ -187,7 +300,9 @@ namespace drinks.web.Controllers
         {
             return View();
         }
+        #endregion
 
+        #region Список всех напитков
         public ActionResult Drinks()
         {
             DrinkListResponse drinkListResponse = new DrinkListResponse();
@@ -216,5 +331,7 @@ namespace drinks.web.Controllers
             }
             return View(); ;
         }
+        #endregion 
+        #endregion
     }
 }

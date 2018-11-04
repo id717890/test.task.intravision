@@ -1,4 +1,4 @@
-﻿@model drinks.web.Models.DrinkViewModel.ParticularDrinkModel
+﻿@model drinks.web.Models.CoinViewModel.ParticularCoinModel
 @{
     ViewBag.Title = "EditDrink";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -10,11 +10,10 @@
 {
     <div class="row">
         <div class="col-xs-12">
-            @using (Html.BeginForm("EditDrink", "Admin", FormMethod.Post, new { @class = "", role = "form", enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("EditCoin", "Admin", FormMethod.Post, new { @class = "", role = "form", enctype = "multipart/form-data" }))
             {
                 @Html.AntiForgeryToken()
                 @Html.HiddenFor(x => x.Id)
-                @Html.HiddenFor(x => x.Image)
                 <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
@@ -27,13 +26,7 @@
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.Caption, new { @class = "control-label", @style = "text-align: left" })
-                    @Html.TextBoxFor(m => m.Caption, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Caption, "", new { @class = "text-danger" })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Cost, new { @class = "control-label", @style = "text-align: left" })
-                    @Html.TextBoxFor(m => m.Cost, new { @class = "form-control", @type = "number" })
-                    @Html.ValidationMessageFor(m => m.Cost, "", new { @class = "text-danger" })
+                    @Html.DisplayTextFor(m => m.Caption)
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.Count, new { @class = "control-label", @style = "text-align: left" })
@@ -41,15 +34,12 @@
                     @Html.ValidationMessageFor(m => m.Count, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Image, new { @class = "control-label", @style = "text-align: left" })
-                    <input type="file" name="ImageFile" />
-                </div>
-                <div class="form-group">
-                    <img width="300" src="/Images/@Model.Image" />
+                    @Html.LabelFor(m => m.IsAllowed, new { @class = "control-label", @style = "text-align: left" })
+                    @Html.CheckBoxFor(m => m.IsAllowed, new { @class = "form-control"})
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Сохранить" class="btn btn-success" />
-                    @Html.ActionLink("Назад", "Drinks", "Admin", null, new { @class = "btn btn-default" })
+                    @Html.ActionLink("Назад", "Coins", "Admin", null, new { @class = "btn btn-default" })
                 </div>
             }
         </div>

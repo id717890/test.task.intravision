@@ -54,9 +54,11 @@
     <Compile Include="HttpService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Request\BaseRequest.cs" />
+    <Compile Include="Request\CoinRequest.cs" />
     <Compile Include="Request\DefaultRequest.cs" />
     <Compile Include="Request\DrinkRequest.cs" />
     <Compile Include="Response\BaseResponse.cs" />
+    <Compile Include="Response\CoinResponse.cs" />
     <Compile Include="Response\DefaultResponse.cs" />
     <Compile Include="Response\DrinkResponse.cs" />
   </ItemGroup>

@@ -13,6 +13,7 @@ namespace drinks.dal.Migrations
         protected override void Seed(drinks.dal.DrinkContext context)
         {
             context.Database.ExecuteSqlCommand("delete from Drinks");
+            context.Database.ExecuteSqlCommand("delete from Coins");
 
             context.Drinks.AddOrUpdate(
                 new Drink { Id = 1, Caption= "Сок апельсиновый", Cost = 10, IsDeleted = false, Count = 50, Image = @"orange.jpg"},

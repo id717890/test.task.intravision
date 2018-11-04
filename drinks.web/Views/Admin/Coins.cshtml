@@ -1,0 +1,66 @@
+﻿@model drinks.web.Models.CoinViewModel.CoinList
+
+@{
+    ViewBag.Title = "Coins";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Управление монетами</h2>
+
+<div class="row">
+    <div class="col-xs-12">
+        @if (TempData["success"] != null)
+        {
+            <div class="alert alert-success">
+                <p>@TempData["success"].ToString()</p>
+            </div>
+        }
+        @if (TempData["errors"] != null)
+        {
+            <div class="alert alert-danger">
+                <p>@TempData["errors"].ToString()</p>
+            </div>
+        }
+        <table class="table table-condensed table-hover table-responsive table-striped" id="demands">
+            <colgroup>
+                <col class="width-30" />
+                <col />
+                <col />
+                <col />
+                <col class="width-50" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Монета</th>
+                    <th>Кол-во</th>
+                    <th>Доступность</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Coins.Any())
+                {
+                    var i = 1;
+                    foreach (var coin in Model.Coins)
+                    {
+                <tr>
+                    <td>@i</td>
+                    <td>@coin.Caption</td>
+                    <td>@coin.Count</td>
+                    <td>@coin.IsAllowed</td>
+                    <td>
+                        <a href="@Url.Action("EditCoin", "Admin", new {id = coin.Id})" title="Редактировать"><i class="fa fa-pencil-alt fa-lg"></i></a>
+                    </td>
+                </tr>
+                        i++;
+                    }
+                }
+                else
+                {
+                    <tr><td colspan="3" style="text-align: center">Монеты отсутствуют</td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
