@@ -1,0 +1,63 @@
+﻿@model drinks.web.Models.DrinkViewModel.ParticularDrinkModel
+@{
+    ViewBag.Title = "EditDrink";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>EditDrink</h2>
+
+@if (Model != null)
+{
+    <div class="row">
+        <div class="col-xs-12">
+            @using (Html.BeginForm("EditDrink", "Admin", FormMethod.Post, new { @class = "", role = "form", enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(x => x.Id)
+        @Html.HiddenFor(x => x.Image)
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @if (TempData["errors"] != null)
+    {
+        <div class="alert alert-danger">
+            <p>@TempData["errors"].ToString()</p>
+        </div>
+}
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Caption, new { @class = "control-label", @style = "text-align: left" })
+            @Html.TextBoxFor(m => m.Caption, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Caption, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Cost, new { @class = "control-label", @style = "text-align: left" })
+            @Html.TextBoxFor(m => m.Cost, new { @class = "form-control", @type = "number" })
+            @Html.ValidationMessageFor(m => m.Cost, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Count, new { @class = "control-label", @style = "text-align: left" })
+            @Html.TextBoxFor(m => m.Count, new { @class = "form-control", @type = "number", @min = "0" })
+            @Html.ValidationMessageFor(m => m.Count, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Image, new { @class = "control-label", @style = "text-align: left" })
+            <input type="file" name="ImageFile" />
+        </div>
+        <div class="form-group">
+            <img width="300" src="/Images/@Model.Image"/>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Сохранить" class="btn btn-success" />
+            @Html.ActionLink("Назад", "Drinks", "Admin", null, new { @class = "btn btn-default" })
+        </div>
+}
+        </div>
+    </div>
+
+}
+else
+{
+    <h1>Объект не найден</h1>
+}
+

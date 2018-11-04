@@ -25,6 +25,7 @@ namespace drinks.web
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/fontawesome/css/fontawesome-all.css",
                       "~/Content/site.css"));
         }
     }

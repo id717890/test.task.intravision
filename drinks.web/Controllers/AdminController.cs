@@ -21,14 +21,120 @@ namespace drinks.web.Controllers
             return View();
         }
 
-        public ActionResult EditDrink()
+        [HttpGet]
+        public ActionResult RemoveDrink(long id, string caption)
         {
-            return null;
+            try
+            {
+                DrinkRequest.FindDrinkById request = new DrinkRequest.FindDrinkById
+                {
+                    Id = id
+                };
+                HttpResponseMessage result = HttpService.PostAsync("api/drink/RemoveDrink", request).Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var response = result.Content.ReadAsAsync<DefaultResponse>().Result;
+                    if (response.ErrorCode == 0 && string.IsNullOrEmpty(response.Message))
+                    {
+                        TempData["success"] = "Напиток '"+ caption +"' успешно удален";
+                    }
+                }
+                else
+                {
+                    TempData["error"] = "Ошибка удаления данных";
+                }
+            }
+            catch (Exception e)
+            {
+                TempData["error"] = e.Message;
+            }
+            return RedirectToAction("Drinks", "Admin");
         }
 
-        public ActionResult DeleteDrink()
+        [HttpPost]
+        public ActionResult EditDrink(DrinkViewModel.ParticularDrinkModel model)
         {
-            return null;
+
+            //Проверяем модель на валидность
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            try
+            {
+                if (model.ImageFile != null)
+                {
+                    string fileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
+                    string ext = Path.GetExtension(model.ImageFile.FileName);
+                    fileName = fileName + DateTime.Now.ToString("yyyymmssfff") + ext;
+                    model.Image = fileName;
+                    fileName = Path.Combine(Server.MapPath("/Images/"), fileName);
+                    model.ImageFile.SaveAs(fileName);
+                }
+
+                DrinkRequest.EditDrink request = new DrinkRequest.EditDrink
+                {
+                    Id =  model.Id,
+                    Caption = model.Caption,
+                    Image = model.Image,
+                    Count = model.Count,
+                    Cost = model.Cost
+                };
+                HttpResponseMessage result = HttpService.PostAsync("api/drink/SaveDrink", request).Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var response = result.Content.ReadAsAsync<DefaultResponse>().Result;
+                    if (response.ErrorCode == 0 && string.IsNullOrEmpty(response.Message))
+                    {
+                        TempData["success"] = "Напиток успешно изменен";
+                    }
+                }
+                else
+                {
+                    TempData["error"] = "Ошибка сохранения данных";
+                }
+            }
+            catch (Exception e)
+            {
+                TempData["error"] = e.Message;
+            }
+            return RedirectToAction("Drinks", "Admin");
+        }
+
+
+
+        [HttpGet]
+        public ActionResult EditDrink(int id)
+        {
+            try
+            {
+                DrinkRequest.FindDrinkById request = new DrinkRequest.FindDrinkById
+                {
+                    Id = id
+                };
+                HttpResponseMessage result = HttpService.PostAsync("api/drink/GetDrinkById", request).Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var response = result.Content.ReadAsAsync<ParticularDrink>().Result;
+                    if (response.ErrorCode == 0 && string.IsNullOrEmpty(response.Message))
+                    {
+                        return View(new DrinkViewModel.ParticularDrinkModel
+                        {
+                            Id = response.Drink.Id,
+                            Caption = response.Drink.Caption,
+                            Image = response.Drink.Image,
+                            Count = response.Drink.Count,
+                            Cost = response.Drink.Cost
+                        });
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return View();
+            }
+            return View();
+
         }
 
         [HttpPost]
@@ -44,7 +150,7 @@ namespace drinks.web.Controllers
                 string fileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
                 string ext = Path.GetExtension(model.ImageFile.FileName);
                 fileName = fileName + DateTime.Now.ToString("yyyymmssfff") + ext;
-                model.Image = "/Images/" + fileName;
+                model.Image = fileName;
                 fileName = Path.Combine(Server.MapPath("/Images/"), fileName);
                 model.ImageFile.SaveAs(fileName);
 

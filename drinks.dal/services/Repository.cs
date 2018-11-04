@@ -1,4 +1,6 @@
-﻿namespace drinks.dal.services
+﻿using System.Data.Entity.Migrations;
+
+namespace drinks.dal.services
 {
     using drinks.dal.@interface.services;
     using drinks.domain.@interface.entities;
@@ -62,6 +64,7 @@
                 {
                     throw new ArgumentNullException("entity");
                 }
+                this.Entities.AddOrUpdate(entity);
                 this._context.SaveChanges();
             }
             catch (DbEntityValidationException dbEx)

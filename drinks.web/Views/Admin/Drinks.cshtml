@@ -51,10 +51,10 @@
                             <td>@drink.Caption</td>
                             <td>@drink.Cost</td>
                             <td>@drink.Count</td>
-                            <td><img src="@drink.Image" height="100"/></td>
+                            <td><img src="/Images/@drink.Image" height="100"/></td>
                             <td>
-                                <a href="@Url.Action("EditDrink", "Admin", new {id = drink.Id, version = 0})" title="Редактировать"><i class="fa fa-pencil-alt fa-lg"></i></a>
-                                <a href="@Url.Action("DeleteDrink", "Admin", new {id = drink.Id })" title="Удалить" style="color: red"><i class="fa fa-times fa-lg"></i></a>
+                                <a href="@Url.Action("EditDrink", "Admin", new {id = drink.Id,})" title="Редактировать"><i class="fa fa-pencil-alt fa-lg"></i></a>
+                                <a href="@Url.Action("RemoveDrink", "Admin", new {id = drink.Id, caption = drink.Caption })" title="Удалить" style="color: red"><i class="fa fa-times fa-lg"></i></a>
                             </td>
                         </tr>
                         i++;

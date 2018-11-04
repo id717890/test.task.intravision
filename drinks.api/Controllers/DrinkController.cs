@@ -3,6 +3,7 @@ using drinks.infrastructure.Response;
 using Ninject;
 using System;
 using System.Web.Http;
+using drinks.domain.@interface.entities;
 using drinks.infrastructure.Request;
 
 namespace drinks.api.Controllers
@@ -28,6 +29,60 @@ namespace drinks.api.Controllers
         }
 
         [HttpPost]
+        [Route("RemoveDrink")]
+        public DefaultResponse RemoveDrink(DrinkRequest.FindDrinkById request)
+        {
+            try
+            {
+                _drinkService.Delete(request.Id);
+                return new DefaultResponse
+                {
+                    Message = string.Empty,
+                    ErrorCode = 0
+                };
+            }
+            catch (Exception e)
+            {
+                return new DefaultResponse
+                {
+                    Message = e.Message,
+                    ErrorCode = 2
+                };
+            }
+        }
+
+        [HttpPost]
+        [Route("SaveDrink")]
+        public DefaultResponse SaveDrink(DrinkRequest.EditDrink request)
+        {
+            try
+            {
+                _drinkService.Update(new Drink
+                {
+                    Id = request.Id,
+                    Caption = request.Caption,
+                    Cost = request.Cost,
+                    Count = request.Count,
+                    Image = request.Image
+                });
+
+                return new DefaultResponse
+                {
+                    Message = string.Empty,
+                    ErrorCode = 0
+                };
+            }
+            catch (Exception e)
+            {
+                return new DefaultResponse
+                {
+                    Message = e.Message,
+                    ErrorCode = 2
+                };
+            }
+        }
+
+        [HttpPost]
         [Route("GetDrinks")]
         public DrinkListResponse GetDrinks()
         {
@@ -36,6 +91,23 @@ namespace drinks.api.Controllers
                 return new DrinkListResponse
                 {
                     Drinks = _drinkService.GetAllDrinks()
+                };
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        [HttpPost]
+        [Route("GetDrinkById")]
+        public ParticularDrink GetDrinkById(DrinkRequest.FindDrinkById request)
+        {
+            try
+            {
+                return new ParticularDrink
+                {
+                    Drink = _drinkService.GetDrinkById(request.Id)
                 };
             }
             catch

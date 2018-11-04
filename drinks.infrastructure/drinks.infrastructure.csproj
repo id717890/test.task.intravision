@@ -58,7 +58,7 @@
     <Compile Include="Request\DrinkRequest.cs" />
     <Compile Include="Response\BaseResponse.cs" />
     <Compile Include="Response\DefaultResponse.cs" />
-    <Compile Include="Response\DrinksResponse.cs" />
+    <Compile Include="Response\DrinkResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

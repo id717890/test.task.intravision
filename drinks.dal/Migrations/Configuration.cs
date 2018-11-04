@@ -15,11 +15,11 @@ namespace drinks.dal.Migrations
             context.Database.ExecuteSqlCommand("delete from Drinks");
 
             context.Drinks.AddOrUpdate(
-                new Drink { Id = 1, Caption= "—ок апельсиновый", Cost = 10, IsDeleted = false, Count = 50, Image = @"/Images/orange.jpg"},
-                new Drink { Id = 1, Caption= "—ок €блочный", Cost = 10, IsDeleted = false, Count = 50, Image = @"/Images/apple.jpg" },
-                new Drink { Id = 1, Caption= "—ок мультифрутовый", Cost = 10, IsDeleted = false, Count = 50, Image = @"/Images/multy.jpg" },
-                new Drink { Id = 1, Caption= "—ок томатный", Cost = 10, IsDeleted = false, Count = 50, Image = @"/Images/tomato.jpg" },
-                new Drink { Id = 1, Caption= "—ок абрикосовый", Cost = 10, IsDeleted = false, Count = 50, Image = @"/Images/apricote.jpg" }
+                new Drink { Id = 1, Caption= "—ок апельсиновый", Cost = 10, IsDeleted = false, Count = 50, Image = @"orange.jpg"},
+                new Drink { Id = 1, Caption= "—ок €блочный", Cost = 10, IsDeleted = false, Count = 50, Image = @"apple.jpg" },
+                new Drink { Id = 1, Caption= "—ок мультифрутовый", Cost = 10, IsDeleted = false, Count = 50, Image = @"multy.jpg" },
+                new Drink { Id = 1, Caption= "—ок томатный", Cost = 10, IsDeleted = false, Count = 50, Image = @"tomato.jpg" },
+                new Drink { Id = 1, Caption= "—ок абрикосовый", Cost = 10, IsDeleted = false, Count = 50, Image = @"apricote.jpg" }
             );
             context.SaveChanges();
 

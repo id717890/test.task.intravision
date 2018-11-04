@@ -180,6 +180,19 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\fontawesome\css\fa-brands.css" />
+    <Content Include="Content\fontawesome\css\fa-brands.min.css" />
+    <Content Include="Content\fontawesome\css\fa-regular.css" />
+    <Content Include="Content\fontawesome\css\fa-regular.min.css" />
+    <Content Include="Content\fontawesome\css\fa-solid.css" />
+    <Content Include="Content\fontawesome\css\fa-solid.min.css" />
+    <Content Include="Content\fontawesome\css\fontawesome-all.css" />
+    <Content Include="Content\fontawesome\css\fontawesome-all.min.css" />
+    <Content Include="Content\fontawesome\css\fontawesome.css" />
+    <Content Include="Content\fontawesome\css\fontawesome.min.css" />
+    <Content Include="Content\fontawesome\webfonts\fa-brands-400.svg" />
+    <Content Include="Content\fontawesome\webfonts\fa-regular-400.svg" />
+    <Content Include="Content\fontawesome\webfonts\fa-solid-900.svg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -189,6 +202,18 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\fontawesome\webfonts\fa-brands-400.eot" />
+    <Content Include="Content\fontawesome\webfonts\fa-brands-400.ttf" />
+    <Content Include="Content\fontawesome\webfonts\fa-brands-400.woff" />
+    <Content Include="Content\fontawesome\webfonts\fa-brands-400.woff2" />
+    <Content Include="Content\fontawesome\webfonts\fa-regular-400.eot" />
+    <Content Include="Content\fontawesome\webfonts\fa-regular-400.ttf" />
+    <Content Include="Content\fontawesome\webfonts\fa-regular-400.woff" />
+    <Content Include="Content\fontawesome\webfonts\fa-regular-400.woff2" />
+    <Content Include="Content\fontawesome\webfonts\fa-solid-900.eot" />
+    <Content Include="Content\fontawesome\webfonts\fa-solid-900.ttf" />
+    <Content Include="Content\fontawesome\webfonts\fa-solid-900.woff" />
+    <Content Include="Content\fontawesome\webfonts\fa-solid-900.woff2" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -217,6 +242,7 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\Drinks.cshtml" />
     <Content Include="Views\Admin\CreateDrink.cshtml" />
+    <Content Include="Views\Admin\EditDrink.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
