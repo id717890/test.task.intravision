@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Web;
-
-namespace drinks.infrastructure
+﻿namespace drinks.infrastructure
 {
+    using System;
+    using System.Configuration;
+    using System.Net.Http;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     public class HttpService
     {
         private static readonly string Url = ConfigurationManager.AppSettings["WebApi"];

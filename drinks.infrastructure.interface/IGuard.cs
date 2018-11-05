@@ -1,3 +1,0 @@
-﻿namespace drinks.infrastructure.@interface
-{
-}

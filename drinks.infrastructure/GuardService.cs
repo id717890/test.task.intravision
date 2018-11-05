@@ -1,6 +1,5 @@
 ﻿namespace drinks.infrastructure
 {
-    using drinks.infrastructure.@interface;
     using System.Configuration;
 
     public class GuardService

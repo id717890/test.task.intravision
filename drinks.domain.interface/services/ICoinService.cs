@@ -7,8 +7,6 @@
     {
         IEnumerable<Coin> GetAllCoins();
         Coin GetCoinById(long id);
-        //Drink Create(string caption, string image, int cost, int count);
         void Update(Coin coin);
-        //void Delete(long id);
     }
 }

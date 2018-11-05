@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using drinks.domain.@interface.entities;
-
-namespace drinks.infrastructure.Response
+﻿namespace drinks.infrastructure.Response
 {
+    using System.Collections.Generic;
+    using domain.@interface.entities;
+
     public class CoinsListResponse: BaseResponse
     {
         public IEnumerable<Coin> Coins { get; set; }

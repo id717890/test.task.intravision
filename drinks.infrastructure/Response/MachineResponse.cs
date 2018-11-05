@@ -1,6 +1,6 @@
 ﻿namespace drinks.infrastructure.Response
 {
-    using drinks.domain.@interface.entities;
+    using domain.@interface.entities;
     using System.Collections.Generic;
 
     public class MachineResponse:BaseResponse
