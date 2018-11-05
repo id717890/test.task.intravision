@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using drinks.domain.@interface.entities;
-
-namespace drinks.dal.mapping
+﻿namespace drinks.dal.mapping
 {
+    using System.Data.Entity.ModelConfiguration;
+    using domain.@interface.entities;
+
     public class DrinkMap: EntityTypeConfiguration<Drink>
     {
         public DrinkMap()

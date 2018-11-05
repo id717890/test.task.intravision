@@ -10,7 +10,7 @@ namespace drinks.dal.Migrations
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(drinks.dal.DrinkContext context)
+        protected override void Seed(DrinkContext context)
         {
             context.Database.ExecuteSqlCommand("delete from Drinks");
             context.Database.ExecuteSqlCommand("delete from Coins");

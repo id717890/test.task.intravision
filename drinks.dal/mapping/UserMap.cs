@@ -1,8 +1,8 @@
-﻿using System.Data.Entity.ModelConfiguration;
-using drinks.domain.@interface.entities;
-
-namespace drinks.dal.mapping
+﻿namespace drinks.dal.mapping
 {
+    using System.Data.Entity.ModelConfiguration;
+    using domain.@interface.entities;
+
     public class UserMap : EntityTypeConfiguration<User>
     {
         public UserMap()

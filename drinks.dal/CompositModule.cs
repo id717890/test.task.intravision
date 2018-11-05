@@ -6,7 +6,6 @@
     {
         public override void Load()
         {
-            //Kernel.Bind<IFileService>().To<FileService>().InSingletonScope();
         }
     }
 }

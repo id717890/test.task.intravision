@@ -1,9 +1,9 @@
-﻿using System.Data.Entity;
-using drinks.dal.mapping;
-using drinks.domain.@interface.entities;
-
-namespace drinks.dal
+﻿namespace drinks.dal
 {
+    using System.Data.Entity;
+    using mapping;
+    using domain.@interface.entities;
+
     public class DrinkContext: DbContext
     {
         public new IDbSet<TEntity> Set<TEntity>() where TEntity : Entity
