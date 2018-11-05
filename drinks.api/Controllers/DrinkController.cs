@@ -1,13 +1,16 @@
-﻿using drinks.domain.@interface.services;
-using drinks.infrastructure.Response;
-using Ninject;
-using System;
-using System.Web.Http;
-using drinks.domain.@interface.entities;
-using drinks.infrastructure.Request;
-
-namespace drinks.api.Controllers
+﻿namespace drinks.api.Controllers
 {
+    using domain.@interface.services;
+    using infrastructure.Response;
+    using System;
+    using System.Web.Http;
+    using domain.@interface.entities;
+    using infrastructure.Request;
+
+    /// <inheritdoc />
+    /// <summary>
+    /// Контроллер для управления напитками
+    /// </summary>
     [RoutePrefix("api/drink")]
     public class DrinkController : ApiController
     {
@@ -18,6 +21,11 @@ namespace drinks.api.Controllers
             _drinkService = service;
         }
 
+        /// <summary>
+        /// Удаляет напиток из БД
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("RemoveDrink")]
         public DefaultResponse RemoveDrink(DrinkRequest.FindDrinkById request)
@@ -41,6 +49,11 @@ namespace drinks.api.Controllers
             }
         }
 
+        /// <summary>
+        /// Сохраняет данные по напитку
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("SaveDrink")]
         public DefaultResponse SaveDrink(DrinkRequest.EditDrink request)
@@ -72,6 +85,10 @@ namespace drinks.api.Controllers
             }
         }
 
+        /// <summary>
+        /// Получает список всех напитков
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("GetDrinks")]
         public DrinkListResponse GetDrinks()
@@ -89,6 +106,11 @@ namespace drinks.api.Controllers
             }
         }
 
+        /// <summary>
+        /// Поиск напитка по ID
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("GetDrinkById")]
         public ParticularDrink GetDrinkById(DrinkRequest.FindDrinkById request)
@@ -106,6 +128,11 @@ namespace drinks.api.Controllers
             }
         }
 
+        /// <summary>
+        /// Создает новый напиток
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("CreateDrink")]
         public DefaultResponse CreateDrink(DrinkRequest.CreateDrink request)

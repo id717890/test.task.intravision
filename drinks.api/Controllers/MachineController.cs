@@ -1,16 +1,15 @@
-﻿using drinks.domain.@interface.entities;
-using drinks.domain.@interface.services;
-using drinks.infrastructure.Request;
-using drinks.infrastructure.Response;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-
-namespace drinks.api.Controllers
+﻿namespace drinks.api.Controllers
 {
+    using domain.@interface.entities;
+    using domain.@interface.services;
+    using infrastructure.Request;
+    using infrastructure.Response;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Http;
+
+    /// <inheritdoc />
     /// <summary>
     /// Контроллер управления автоматом с соками
     /// </summary>
@@ -26,6 +25,11 @@ namespace drinks.api.Controllers
             _drinkService = drinkService;
         }
 
+        /// <summary>
+        /// Совершает покупку по выбранному заказу
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost, Route("Buy")]
         public BuyResponse Buy(BuyRequest request)
         {
@@ -59,7 +63,7 @@ namespace drinks.api.Controllers
                 }
                 var refund = totalCoins - request.TotalCost;
                 if (refund != 0) response.Refund = CalculateRefund(refund, coinsBuffer);
-                if (response.Refund !=null && response.Refund.Count > 0)
+                if (response.Refund != null && response.Refund.Count > 0)
                 {
                     foreach (var itemDictionary in response.Refund)
                     {
@@ -76,6 +80,12 @@ namespace drinks.api.Controllers
             return response;
         }
 
+        /// <summary>
+        /// Процедура расчета сдачи в монетах
+        /// </summary>
+        /// <param name="refund"></param>
+        /// <param name="coins"></param>
+        /// <returns></returns>
         private List<KeyValuePair<Coin, int>> CalculateRefund(int refund, IEnumerable<Coin> coins)
         {
             var result = new List<KeyValuePair<Coin, int>>();
@@ -83,7 +93,7 @@ namespace drinks.api.Controllers
             coins = coins.Where(x => x.Count > 0).OrderByDescending(x => x.Value);
 
             while (sum != refund)
-            {                
+            {
                 foreach (var coin in coins)
                 {
                     sum = 0;
@@ -103,7 +113,8 @@ namespace drinks.api.Controllers
                         {
                             if ((steps <= coin.Count) && (steps > 0)) result.Add(new KeyValuePair<Coin, int>(coin, steps));
                         }
-                    } else
+                    }
+                    else
                     if ((remPart == 0) && (intPart <= coin.Count))
                     {
                         result.Add(new KeyValuePair<Coin, int>(coin, intPart));
@@ -122,35 +133,17 @@ namespace drinks.api.Controllers
                     {
                         result.Add(new KeyValuePair<Coin, int>(coin, intPart));
                     }
-
-
-                        //if (countCoins > 0 && countCoins <= coin.Count)
-                        //{
-                        //    result.Add(coin, countCoins);
-                        //    sum = sum + coin.Value * countCoins;
-                        //}
-                        //else if (countCoins > 0 && countCoins > coin.Count)
-                        //{
-                        //    var steps = countCoins;
-                        //    while ((steps > coin.Count) && (steps > 0))
-                        //    {
-                        //        if (steps * coin.Value <= refund)
-                        //        {
-                        //            result.Add(coin, countCoins);
-                        //            sum = sum + coin.Value * countCoins;
-                        //            break;
-                        //        }
-                        //        steps += -1;
-                        //    }
-
-                        //}
-                    }
+                }
                 sum = result.Sum(item => item.Key.Value * item.Value);
                 if (sum != refund) throw new Exception("Автомат не может выдать сдачу");
             }
             return result;
         }
 
+        /// <summary>
+        /// Получает модель для отображения автомата
+        /// </summary>
+        /// <returns></returns>
         [HttpPost, Route("GetMachine")]
         public MachineResponse GetMachine()
         {

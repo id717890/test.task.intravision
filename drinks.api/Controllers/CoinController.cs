@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using drinks.domain.@interface.services;
-using drinks.infrastructure.Request;
-using drinks.infrastructure.Response;
-using Ninject;
-
-namespace drinks.api.Controllers
+﻿namespace drinks.api.Controllers
 {
+    using System;
+    using System.Web.Http;
+    using domain.@interface.services;
+    using infrastructure.Request;
+    using infrastructure.Response;
+
+    /// <summary>
+    /// Контроллер для управления монетами
+    /// </summary>
     [RoutePrefix("api/coin")]
     public class CoinController : ApiController
     {
@@ -21,6 +19,11 @@ namespace drinks.api.Controllers
             _coinService = service;
         }
 
+        /// <summary>
+        /// Сохраняет данные по монете
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("SaveCoin")]
         public DefaultResponse SaveCoin(CoinRequest.EditCoin request)
@@ -52,6 +55,10 @@ namespace drinks.api.Controllers
             }
         }
 
+        /// <summary>
+        /// Получает список всех монет
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("GetCoins")]
         public CoinsListResponse GetDrinks()
@@ -69,6 +76,11 @@ namespace drinks.api.Controllers
             }
         }
 
+        /// <summary>
+        /// Поиск монеты по ID
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("GetCoinById")]
         public ParticularCoin GetCoinById(CoinRequest.FindCoinById request)
