@@ -10,8 +10,8 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="form-group">
-            <a href="@Url.Action("Drinks", "Admin")" class="btn btn-lg btn-default"><i class="fa fa-plus" aria-hidden="true"></i> Управление напитками</a>
-            <a href="@Url.Action("Logout", "Admin")" class="btn btn-lg btn-default"><i class="fa fa-plus" aria-hidden="true"></i> Выход</a>
+            <a href="@Url.Action("Drinks", "Admin")" class="btn btn-lg btn-default"><i class="fa fa-database" aria-hidden="true"></i> Управление напитками</a>
+            <a href="@Url.Action("Logout", "Admin")" class="btn btn-lg btn-default"><i class="fa fa-sign-out-alt"" aria-hidden="true"></i> Выход</a>
         </div>
 
         @if (TempData["success"] != null)
@@ -32,7 +32,7 @@
                 <col />
                 <col />
                 <col />
-                <col class="width-50" />
+                <col class="width-30" style="width: 25px !important;" />
             </colgroup>
             <thead>
                 <tr>
@@ -49,15 +49,24 @@
                     var i = 1;
                     foreach (var coin in Model.Coins)
                     {
-                <tr>
-                    <td>@i</td>
-                    <td>@coin.Caption</td>
-                    <td>@coin.Count</td>
-                    <td>@coin.IsAllowed</td>
-                    <td>
-                        <a href="@Url.Action("EditCoin", "Admin", new {id = coin.Id})" title="Редактировать"><i class="fa fa-pencil-alt fa-lg"></i></a>
-                    </td>
-                </tr>
+                        <tr>
+                            <td>@i</td>
+                            <td>@coin.Caption</td>
+                            <td>@coin.Count</td>
+                            <td>
+                                @if (coin.IsAllowed)
+                                {
+                                    <i class="fa fa-check-circle" style="color: forestgreen"> Включено</i>
+                                }
+                                else
+                                {
+                                    <i class="fa fa-times-circle" style="color: indianred"> Отключено</i>
+                                }
+                            </td>
+                            <td>
+                                <a href="@Url.Action("EditCoin", "Admin", new {id = coin.Id})" title="Редактировать"><i class="fa fa-pencil-alt fa-lg"></i></a>
+                            </td>
+                        </tr>
                         i++;
                     }
                 }
