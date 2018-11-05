@@ -145,11 +145,8 @@ namespace drinks.api.Controllers
 
                         //}
                     }
-                sum = 0;
-                foreach (var item in result)
-                {
-                    sum += item.Key.Value * item.Value;
-                }
+                sum = result.Sum(item => item.Key.Value * item.Value);
+                if (sum != refund) throw new Exception("Автомат не может выдать сдачу");
             }
             return result;
         }

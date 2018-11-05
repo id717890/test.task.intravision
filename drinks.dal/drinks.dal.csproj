@@ -55,9 +55,9 @@
     <Compile Include="mapping\CoinMap.cs" />
     <Compile Include="mapping\DrinkMap.cs" />
     <Compile Include="mapping\UserMap.cs" />
-    <Compile Include="Migrations\201811030807495_Mg1.cs" />
-    <Compile Include="Migrations\201811030807495_Mg1.Designer.cs">
-      <DependentUpon>201811030807495_Mg1.cs</DependentUpon>
+    <Compile Include="Migrations\201811051824265_CreateMigration.cs" />
+    <Compile Include="Migrations\201811051824265_CreateMigration.Designer.cs">
+      <DependentUpon>201811051824265_CreateMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -79,10 +79,9 @@
       <Name>drinks.domain.interface</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201811030807495_Mg1.resx">
-      <DependentUpon>201811030807495_Mg1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201811051824265_CreateMigration.resx">
+      <DependentUpon>201811051824265_CreateMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

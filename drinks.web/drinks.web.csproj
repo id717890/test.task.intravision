@@ -196,6 +196,14 @@
     <Content Include="Content\fontawesome\webfonts\fa-brands-400.svg" />
     <Content Include="Content\fontawesome\webfonts\fa-regular-400.svg" />
     <Content Include="Content\fontawesome\webfonts\fa-solid-900.svg" />
+    <Content Include="Content\images\10rub.jpg" />
+    <Content Include="Content\images\1rub.jpg" />
+    <Content Include="Content\images\2rub.jpg" />
+    <Content Include="Content\images\5rub.jpg" />
+    <Content Include="Content\images\source\10rub.jpg" />
+    <Content Include="Content\images\source\1rub.jpg" />
+    <Content Include="Content\images\source\2rub.jpg" />
+    <Content Include="Content\images\source\5rub.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

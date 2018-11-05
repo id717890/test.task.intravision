@@ -7,18 +7,26 @@
 <div class="row">
     @if (TempData["success"] != null)
     {
-        <div class="alert alert-success">
-            <p>@TempData["success"].ToString()</p>
+        <div class="col-xs-12" style="margin-top: 25px">
+            <div class="alert alert-success">
+                <p>@TempData["success"].ToString()</p>
+            </div>
         </div>
     }
     @if (TempData["errors"] != null)
     {
-        <div class="alert alert-danger">
-            <p>@TempData["errors"].ToString()</p>
+        <div class="col-xs-12"  style="margin-top: 25px">
+            <div class="alert alert-danger">
+                <p>@TempData["errors"].ToString()</p>
+            </div>
         </div>
     }
-    <a href="@Url.Action("BuyDrink","Home", new { cost = Model.TotalCost })" class="btn btn-lg btn-primary">Купить</a>
-    <a href="@Url.Action("ResetAll","Home")" class="btn btn-lg btn-warning">Reset ALL</a>
+    <div class="col-xs-12" style="margin-top: 25px">
+        <div class="form-group text-center">
+            <a href="@Url.Action("BuyDrink", "Home", new {cost = Model.TotalCost})" class="btn btn-lg btn-primary" style="width: 150px;"><i class="fa fa-dollar-sign"> Купить</i></a>
+            <a href="@Url.Action("ResetAll", "Home")" class="btn btn-lg btn-warning"  style="width: 150px;"><i class="fa fa-eraser"> Reset ALL</i></a>
+        </div>
+    </div>
 
     @if (Model != null)
     {
@@ -48,23 +56,26 @@
             {
                 if (Model.Coins.Any())
                 {
-                    <div class="coin-wrapper">
+                    <div class="coin-wrapper panel panel-default" style="padding-top: 20px">
                         @foreach (var coin in Model.Coins)
                         {
-                            <div class="panel coin-panel">
-                                <h3>@coin.Caption</h3>
-                                @if (coin.IsAllowed)
-                                {
-                                    <a href="@Url.Action("PayCoin","Home", new { id = coin.Id, value = coin.Value })" class="btn btn-lg btn-success"><i class="fa fa-ruble-sign"> Внести</i></a>
-                                }
-                                else
-                                {
-                                    <p style="color: orangered">Данные монеты <br /> не принимаются</p>
-                                }
-                                <br />
-                                <p>Кол-во монет в автомате</p>
-                                <p>@coin.Count</p>
-                            </div>
+                        <div class="coin-panel">
+                            <img src="/Content/images/@coin.Image" height="105" />
+                            <h3>@coin.Caption</h3>
+                            @if (coin.IsAllowed)
+    {
+                        <a href="@Url.Action("PayCoin", "Home", new {id = coin.Id, value = coin.Value})" class="btn btn-lg btn-success"><i class="fa fa-ruble-sign"> Внести</i></a>
+}
+else
+{
+                        <p style="color: orangered">
+                            Данные монеты <br /> не принимаются
+                        </p>
+}
+                            <br />
+                            <p>Кол-во монет в автомате</p>
+                            <p>@coin.Count</p>
+                        </div>
                         }
                     </div>
                 }
@@ -80,31 +91,32 @@
             {
                 if (Model.Drinks.Any())
                 {
-                    <div class="drink-wrapper" style="margin-top: 40px;">
+                    <div class="drink-wrapper panel panel-default" style="margin-top: 40px; padding-top: 20px">
                         @foreach (var drink in Model.Drinks)
                         {
-                            <div class="panel drink-panel">
-                                <p>@drink.Caption</p>
-                                <img class="img" src="/Images/@drink.Image" />
-                                <br />
-                                <p>Кол-во</p>
-                                <p>@drink.Count</p>
-                                @if (drink.Count > 0)
-                            {
-                                if (Model.Basket != null && Model.Basket.Contains(Convert.ToInt32(drink.Id)))
-                                {
-                                        <a href="@Url.Action("RemoveDrinkFromBasket", "Home", new { value = drink.Id })" class="btn btn-lg btn-default"><i class="fa fa-shopping-basket"> Отменить</i></a>
-                                    }
-                                    else
-                                    {
-                                        <a href="@Url.Action("AddDrinkToBasket", "Home", new { value = drink.Id })" class="btn btn-lg btn-danger"><i class="fa fa-shopping-basket"> В корзину</i></a>
-                                    }
-                                }
-                                else
-                                {
-                                    <p style="color: orangered">Данный напиток <br /> закончился</p>
-                                }
-                            </div>
+                        <div class="panel drink-panel">
+                            <p>@drink.Caption</p>
+                            <p style="font-weight: bold">Цена: @drink.Cost руб.</p>
+                            <img class="img" src="/Images/@drink.Image" />
+                            <br />
+                            <p>Кол-во</p>
+                            <p>@drink.Count</p>
+                            @if (drink.Count > 0)
+    {
+        if (Model.Basket != null && Model.Basket.Contains(Convert.ToInt32(drink.Id)))
+        {
+                        <a href="@Url.Action("RemoveDrinkFromBasket", "Home", new { value = drink.Id })" class="btn btn-lg btn-default"><i class="fa fa-shopping-basket"> Отменить</i></a>
+}
+else
+{
+                        <a href="@Url.Action("AddDrinkToBasket", "Home", new { value = drink.Id })" class="btn btn-lg btn-danger"><i class="fa fa-shopping-basket"> В корзину</i></a>
+}
+}
+else
+{
+                        <p style="color: orangered">Данный напиток <br /> закончился</p>
+}
+                        </div>
                         }
                     </div>
                 }

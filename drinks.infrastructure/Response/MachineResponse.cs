@@ -12,5 +12,6 @@
     public class BuyResponse: BaseResponse
     {
         public List<KeyValuePair<Coin, int>> Refund { get; set; }
+        public int RefundTotal { get; set; }
     }
 }

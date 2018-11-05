@@ -3,7 +3,7 @@ namespace drinks.dal.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Mg1 : DbMigration
+    public partial class CreateMigration : DbMigration
     {
         public override void Up()
         {
@@ -15,6 +15,7 @@ namespace drinks.dal.Migrations
                         caption = c.String(nullable: false),
                         value = c.Int(nullable: false),
                         count = c.Int(nullable: false),
+                        Image = c.String(),
                         is_allowed = c.Boolean(nullable: false),
                         IsDeleted = c.Boolean(nullable: false),
                     })

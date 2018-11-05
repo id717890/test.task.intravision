@@ -5,6 +5,7 @@
         public string Caption { get; set; }
         public int Value { get; set; }
         public int Count { get; set; }
+        public string Image { get; set; }
         public bool IsAllowed { get; set; }
     }
 }

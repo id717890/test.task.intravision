@@ -7,13 +7,13 @@ namespace drinks.dal.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class Mg1 : IMigrationMetadata
+    public sealed partial class CreateMigration : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Mg1));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(CreateMigration));
         
         string IMigrationMetadata.Id
         {
-            get { return "201811030807495_Mg1"; }
+            get { return "201811051824265_CreateMigration"; }
         }
         
         string IMigrationMetadata.Source

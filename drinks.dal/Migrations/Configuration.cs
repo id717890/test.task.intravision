@@ -16,19 +16,19 @@ namespace drinks.dal.Migrations
             context.Database.ExecuteSqlCommand("delete from Coins");
 
             context.Drinks.AddOrUpdate(
-                new Drink { Id = 1, Caption= "—ок апельсиновый", Cost = 10, IsDeleted = false, Count = 50, Image = @"orange.jpg"},
-                new Drink { Id = 1, Caption= "—ок €блочный", Cost = 10, IsDeleted = false, Count = 50, Image = @"apple.jpg" },
-                new Drink { Id = 1, Caption= "—ок мультифрутовый", Cost = 10, IsDeleted = false, Count = 50, Image = @"multy.jpg" },
-                new Drink { Id = 1, Caption= "—ок томатный", Cost = 10, IsDeleted = false, Count = 50, Image = @"tomato.jpg" },
-                new Drink { Id = 1, Caption= "—ок абрикосовый", Cost = 10, IsDeleted = false, Count = 50, Image = @"apricote.jpg" }
+                new Drink { Id = 1, Caption= "—ок апельсиновый", Cost = 20, IsDeleted = false, Count = 2, Image = @"orange.jpg"},
+                new Drink { Id = 1, Caption= "—ок €блочный", Cost = 18, IsDeleted = false, Count = 2, Image = @"apple.jpg" },
+                new Drink { Id = 1, Caption= "—ок мультифрутовый", Cost = 15, IsDeleted = false, Count = 2, Image = @"multy.jpg" },
+                new Drink { Id = 1, Caption= "—ок томатный", Cost = 10, IsDeleted = false, Count = 0, Image = @"tomato.jpg" },
+                new Drink { Id = 1, Caption= "—ок абрикосовый", Cost = 13, IsDeleted = false, Count = 3, Image = @"apricote.jpg" }
             );
             context.SaveChanges();
 
             context.Coins.AddOrUpdate(
-                new Coin { Id = 1, Caption = "1 рубль", Count = 1, IsAllowed = true, IsDeleted = false, Value = 1 },
-                new Coin { Id = 2, Caption = "2 рубл€", Count = 3, IsAllowed = true, IsDeleted = false, Value = 2 },
-                new Coin { Id = 5, Caption = "5 рублей", Count = 3, IsAllowed = true, IsDeleted = false, Value = 5 },
-                new Coin { Id = 10, Caption = "10 рублей", Count = 5, IsAllowed = true, IsDeleted = false, Value = 10}
+                new Coin { Id = 1, Caption = "1 рубль", Count = 0, IsAllowed = true, IsDeleted = false, Value = 1, Image = "1rub.jpg" },
+                new Coin { Id = 2, Caption = "2 рубл€", Count = 0, IsAllowed = true, IsDeleted = false, Value = 2, Image = "2rub.jpg" },
+                new Coin { Id = 5, Caption = "5 рублей", Count = 0, IsAllowed = true, IsDeleted = false, Value = 5, Image = "5rub.jpg" },
+                new Coin { Id = 10, Caption = "10 рублей", Count = 0, IsAllowed = true, IsDeleted = false, Value = 10, Image = "10rub.jpg" }
             );
             context.SaveChanges();
 

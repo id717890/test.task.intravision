@@ -17,15 +17,16 @@ namespace drinks.web.Controllers
     {
         public ActionResult ResetAll ()
         {
-            Session["drinks"] = null;
-            Session["coins"] = null;
-            Response.SetCookie(new HttpCookie("paid") { Expires = DateTime.Now.AddDays(-1) });
+            Session.Remove("drinks");
+            Session.Remove("coins");
+            Session.Remove("paid");
+            Session.Remove("refund");
             return RedirectToAction("Index", "Home");
         }
 
         public ActionResult BuyDrink(int cost)
         {
-            int paid = GetPaid();
+            var paid = (int?) Session["paid"] ?? 0;
             // Проверяем хватает ли внесенной суммы для совершения покупки
             if (cost>paid)
             {
@@ -52,10 +53,23 @@ namespace drinks.web.Controllers
                     response = result.Content.ReadAsAsync<BuyResponse>().Result;
                     if (response.ErrorCode == 0 && string.IsNullOrEmpty(response.Message))
                     {
-                        Session["drinks"] = null;
-                        Session["coins"] = null;
-                        Response.SetCookie(new HttpCookie("paid") { Expires = DateTime.Now.AddDays(-1) });
-                        TempData["success"] = "Напиток куплен";
+                        Session.Remove("drinks");
+                        Session.Remove("coins");
+                        Session.Remove("paid");
+                        Session.Remove("refund");
+                        var message = "Напиток куплен. ";
+                        if (response.Refund !=null && response.Refund.Count>0)
+                        {
+                            message += "СДАЧА = ";
+                            var refund = 0;
+                            foreach (var refundItem in response.Refund)
+                            {
+                                refund += refundItem.Key.Value * refundItem.Value;
+                                message += refundItem.Key.Caption + " - " + refundItem.Value + " шт.; ";
+                            }
+                            Session["refund"] = refund;
+                        }
+                        TempData["success"] = message;
                     } else
                     {
                         TempData["errors"] = response.Message;
@@ -73,23 +87,24 @@ namespace drinks.web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        private int GetPaid()
-        {
-            try
-            {
-                var paid = Request.Cookies["paid"];
-                if (paid?.Value != null) return Convert.ToInt32(paid.Value);
-            } 
-            catch
-            {
-                return 0;
-            }
-            return 0;
-        }
+        //private int GetPaid()
+        //{
+        //    try
+        //    {
+        //        var paid = Request.Cookies["paid"];
+        //        if (paid?.Value != null) return Convert.ToInt32(paid.Value);
+        //    } 
+        //    catch
+        //    {
+        //        return 0;
+        //    }
+        //    return 0;
+        //}
 
         public ActionResult CancelPaid()
         {
-            Response.SetCookie(new HttpCookie("paid") { Expires = DateTime.Now.AddDays(-1) });
+            Session.Remove("paid");
+            //Response.SetCookie(new HttpCookie("paid") { Expires = DateTime.Now.AddDays(-1) });
             //Response.SetCookie(new HttpCookie("paid")
             //{
             //    Value = string.Empty,
@@ -100,21 +115,18 @@ namespace drinks.web.Controllers
 
         public ActionResult CancelOrder()
         {
-            Response.SetCookie(new HttpCookie("drinks")
-            {
-                Value = string.Empty,
-                Expires = DateTime.Now.AddDays(Convert.ToInt32(ConfigurationManager.AppSettings["cookie_expiration"]))
-            });
+            Session.Remove("drinks");
+            //Response.SetCookie(new HttpCookie("drinks")
+            //{
+            //    Value = string.Empty,
+            //    Expires = DateTime.Now.AddDays(Convert.ToInt32(ConfigurationManager.AppSettings["cookie_expiration"]))
+            //});
             return RedirectToAction("Index", "Home");
         }
 
         public ActionResult TakeRefund()
         {
-            Response.SetCookie(new HttpCookie("refund")
-            {
-                Value = string.Empty,
-                Expires = DateTime.Now.AddDays(Convert.ToInt32(ConfigurationManager.AppSettings["cookie_expiration"]))
-            });
+            Session.Remove("refund");
             return RedirectToAction("Index", "Home");
         }
 
@@ -160,14 +172,15 @@ namespace drinks.web.Controllers
 
         public ActionResult PayCoin(int id, int value)
         {
-            var paid = 0;
-            var paidCookie = Request.Cookies["paid"];
-            if (paidCookie?.Value != null) paid = Convert.ToInt32(paidCookie.Value);
-            Response.SetCookie(new HttpCookie("paid")
-            {
-                Value = (paid + value).ToString(),
-                Expires = DateTime.Now.AddDays(Convert.ToInt32(ConfigurationManager.AppSettings["cookie_expiration"]))
-            });
+            var paid = (int?) Session["paid"] ?? 0;
+            Session["paid"] = paid + value;
+            //var paidCookie = Request.Cookies["paid"];
+            //if (paidCookie?.Value != null) paid = Convert.ToInt32(paidCookie.Value);
+            //Response.SetCookie(new HttpCookie("paid")
+            //{
+            //    Value = (paid + value).ToString(),
+            //    Expires = DateTime.Now.AddDays(Convert.ToInt32(ConfigurationManager.AppSettings["cookie_expiration"]))
+            //});
             //var coinsCookie = Request.Cookies["coins"];
             //if (coinsCookie?.Value != null)
             //{
@@ -212,34 +225,33 @@ namespace drinks.web.Controllers
             return RedirectToAction("Index");
         }
 
-        private Dictionary<int, int> GetCoinsFromCookie()
-        {
-            var data = new Dictionary<int, int>();
-            var coinsCookie = Request.Cookies["coins"];
-            var coinsStr = string.Empty;
-            if (coinsCookie?.Value != null) coinsStr = coinsCookie.Value;
+        //private Dictionary<int, int> GetCoinsFromCookie()
+        //{
+        //    var data = new Dictionary<int, int>();
+        //    var coinsCookie = Request.Cookies["coins"];
+        //    var coinsStr = string.Empty;
+        //    if (coinsCookie?.Value != null) coinsStr = coinsCookie.Value;
 
-            var coinsSplit = coinsStr.Split(';');
-            foreach (var item in coinsSplit)
-            {
-                var itemSplit = item.Split(':');
-                try
-                {
-                    if (!string.IsNullOrEmpty(itemSplit[0]) && !string.IsNullOrEmpty(itemSplit[1]))
-                    {
-                        data.Add(Convert.ToInt32(itemSplit[0]), Convert.ToInt32(itemSplit[1]));
-                    }
-                }
-                catch { };
-            }
-            return data;
-        }
+        //    var coinsSplit = coinsStr.Split(';');
+        //    foreach (var item in coinsSplit)
+        //    {
+        //        var itemSplit = item.Split(':');
+        //        try
+        //        {
+        //            if (!string.IsNullOrEmpty(itemSplit[0]) && !string.IsNullOrEmpty(itemSplit[1]))
+        //            {
+        //                data.Add(Convert.ToInt32(itemSplit[0]), Convert.ToInt32(itemSplit[1]));
+        //            }
+        //        }
+        //        catch { };
+        //    }
+        //    return data;
+        //}
 
 
 
         public ActionResult Index()
         {
-            var model = new MachineViewModel.Machine();
             MachineResponse response = new MachineResponse();
             try
             {
@@ -255,8 +267,11 @@ namespace drinks.web.Controllers
                             Coins = response.Coins
                         };
 
-                        var paidCookie = Request.Cookies["paid"];
-                        if (paidCookie?.Value != null) machine.Paid += Convert.ToInt32(paidCookie.Value);
+                        //var paidCookie = Request.Cookies["paid"];
+                        //if (paidCookie?.Value != null) machine.Paid += Convert.ToInt32(paidCookie.Value);
+
+                        machine.Paid = (int?) Session["paid"] ?? 0;
+                        machine.Refund = (int?) Session["refund"] ?? 0;
 
                         var drinks = Session["drinks"] != null ? (List<int>)Session["drinks"] : new List<int>();
                         machine.Basket = drinks;
