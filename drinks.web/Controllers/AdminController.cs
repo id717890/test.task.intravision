@@ -5,6 +5,7 @@ using drinks.infrastructure.Response;
 using drinks.web.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -13,12 +14,14 @@ using System.Web.Mvc;
 
 namespace drinks.web.Controllers
 {
+    [CustomFilter]
     public class AdminController : Controller
     {
         // GET: Admin
-        public ActionResult Index()
+        public ActionResult Logout()
         {
-            return View();
+            Response.SetCookie(new HttpCookie("secret") { Expires = DateTime.Now.AddDays(-1) });
+            return RedirectToAction("Index","Home");
         }
 
         #region HTTP_POST - изменение монеты
@@ -303,8 +306,8 @@ namespace drinks.web.Controllers
         #endregion
 
         #region Список всех напитков
-        public ActionResult Drinks()
-        {
+        public ActionResult Drinks(string secret)
+        {   
             DrinkListResponse drinkListResponse = new DrinkListResponse();
             try
             {
@@ -331,7 +334,15 @@ namespace drinks.web.Controllers
             }
             return View(); ;
         }
-        #endregion 
         #endregion
+        #endregion
+
+        //private bool CheckSecret(string secret)
+        //{
+        //    if (secret == null) return false;
+        //    var configSecret = ConfigurationManager.AppSettings["secret"];
+        //    return configSecret.ToLower() == secret.ToLower();
+        //}
     }
+
 }

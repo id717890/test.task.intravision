@@ -13,7 +13,8 @@ namespace drinks.web
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute("Admin/Action1", "Admin/{secret}/drinks", new { controller = "Admin", action = "Drinks", secret = UrlParameter.Optional });
+            routes.MapRoute("Admin/Drinks", "Admin/{secret}/Drinks", new { controller = "Admin", action = "Drinks", secret = UrlParameter.Optional });
+            routes.MapRoute("Admin/Coins", "Admin/{secret}/Coins", new { controller = "Admin", action = "Coins", secret = UrlParameter.Optional });
 
             routes.MapRoute(
                 name: "Default",
