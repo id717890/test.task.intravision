@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using drinks.domain.@interface.entities;
+    using domain.@interface.entities;
 
     public interface IRepository<TEntity> where TEntity : Entity
     {

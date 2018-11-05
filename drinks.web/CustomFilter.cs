@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using drinks.domain.@interface.services;
-using drinks.infrastructure;
-
-namespace drinks.web
+﻿namespace drinks.web
 {
+    using System;
+    using System.Configuration;
+    using System.Web;
+    using System.Web.Mvc;
+    using infrastructure;
+
     public class CustomFilter : ActionFilterAttribute
     {
         private static readonly string _secret = ConfigurationManager.AppSettings["secret"];
@@ -42,20 +39,6 @@ namespace drinks.web
                 }
             }
             base.OnActionExecuting(filterContext);
-
-
-
-            //if (filterContext.RouteData.Values.ContainsKey("secret"))
-            //{
-            //    var secret = filterContext.RouteData.Values["secret"].ToString();
-            //    if (_secret.ToLower() == secret.ToLower()) base.OnActionExecuting(filterContext);
-            //    else filterContext.Result = new RedirectResult("/");
-            //}
-            //else
-            //{
-            //    filterContext.Result = new RedirectResult("/");
-            //}
-
         }
     }
 }

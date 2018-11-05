@@ -1,29 +1,29 @@
-﻿using drinks.domain.@interface.services;
-using drinks.infrastructure;
-using drinks.infrastructure.Request;
-using drinks.infrastructure.Response;
-using drinks.web.Models;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Web;
-using System.Web.Mvc;
-
-namespace drinks.web.Controllers
+﻿namespace drinks.web.Controllers
 {
+    using infrastructure;
+    using infrastructure.Request;
+    using infrastructure.Response;
+    using Models;
+    using System;
+    using System.IO;
+    using System.Net.Http;
+    using System.Web;
+    using System.Web.Mvc;
+
     [CustomFilter]
     public class AdminController : Controller
     {
-        // GET: Admin
+        /// <summary>
+        /// Выход из админской части
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Logout()
         {
             Response.SetCookie(new HttpCookie("secret") { Expires = DateTime.Now.AddDays(-1) });
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
 
+        #region МОНЕТЫ
         #region HTTP_POST - изменение монеты
         [HttpPost]
         public ActionResult EditCoin(CoinViewModel.ParticularCoinModel model)
@@ -84,7 +84,7 @@ namespace drinks.web.Controllers
                             Id = response.Coin.Id,
                             Caption = response.Coin.Caption,
                             Count = response.Coin.Count,
-                            IsAllowed= response.Coin.IsAllowed
+                            IsAllowed = response.Coin.IsAllowed
                         });
                     }
                 }
@@ -127,9 +127,8 @@ namespace drinks.web.Controllers
             }
             return View(); ;
         }
-        #endregion 
-
-
+        #endregion  
+        #endregion
 
         #region НАПИТКИ
         #region HTTP_GET - Удаление напитка
@@ -168,7 +167,6 @@ namespace drinks.web.Controllers
         [HttpPost]
         public ActionResult EditDrink(DrinkViewModel.ParticularDrinkModel model)
         {
-
             //Проверяем модель на валидность
             if (!ModelState.IsValid)
             {
@@ -178,12 +176,14 @@ namespace drinks.web.Controllers
             {
                 if (model.ImageFile != null)
                 {
+                    #region Копируем файл изображения в папку Images и записываем в модель имя файла
                     string fileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
                     string ext = Path.GetExtension(model.ImageFile.FileName);
                     fileName = fileName + DateTime.Now.ToString("yyyymmssfff") + ext;
                     model.Image = fileName;
                     fileName = Path.Combine(Server.MapPath("/Images/"), fileName);
                     model.ImageFile.SaveAs(fileName);
+                    #endregion
                 }
 
                 DrinkRequest.EditDrink request = new DrinkRequest.EditDrink
@@ -263,12 +263,14 @@ namespace drinks.web.Controllers
             }
             try
             {
+                #region  Копируем файл изображения в папку Images и записываем в модель имя файла
                 string fileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
                 string ext = Path.GetExtension(model.ImageFile.FileName);
                 fileName = fileName + DateTime.Now.ToString("yyyymmssfff") + ext;
                 model.Image = fileName;
                 fileName = Path.Combine(Server.MapPath("/Images/"), fileName);
                 model.ImageFile.SaveAs(fileName);
+                #endregion
 
                 DrinkRequest.CreateDrink request = new DrinkRequest.CreateDrink
                 {
@@ -307,7 +309,7 @@ namespace drinks.web.Controllers
 
         #region Список всех напитков
         public ActionResult Drinks(string secret)
-        {   
+        {
             DrinkListResponse drinkListResponse = new DrinkListResponse();
             try
             {
@@ -336,13 +338,6 @@ namespace drinks.web.Controllers
         }
         #endregion
         #endregion
-
-        //private bool CheckSecret(string secret)
-        //{
-        //    if (secret == null) return false;
-        //    var configSecret = ConfigurationManager.AppSettings["secret"];
-        //    return configSecret.ToLower() == secret.ToLower();
-        //}
     }
 
 }
