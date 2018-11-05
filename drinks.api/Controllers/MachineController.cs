@@ -52,6 +52,9 @@
                     }
                 }
 
+                var refund = totalCoins - request.TotalCost;
+                if (refund != 0) response.Refund = CalculateRefund(refund, coinsBuffer);
+
                 foreach (var drinkId in request.Drinks)
                 {
                     var drink = _drinkService.GetDrinkById(drinkId);
@@ -61,8 +64,7 @@
                         _drinkService.Update(drink);
                     }
                 }
-                var refund = totalCoins - request.TotalCost;
-                if (refund != 0) response.Refund = CalculateRefund(refund, coinsBuffer);
+                
                 if (response.Refund != null && response.Refund.Count > 0)
                 {
                     foreach (var itemDictionary in response.Refund)
@@ -135,7 +137,7 @@
                     }
                 }
                 sum = result.Sum(item => item.Key.Value * item.Value);
-                if (sum != refund) throw new Exception("Автомат не может выдать сдачу");
+                if (sum != refund) throw new Exception("Автомат не может выдать сдачу, т.к. нет подходящих монет");
             }
             return result;
         }
