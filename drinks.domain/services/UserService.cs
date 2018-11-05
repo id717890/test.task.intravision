@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using drinks.dal.@interface.services;
-using drinks.domain.@interface.entities;
-using drinks.domain.@interface.services;
-
-namespace drinks.domain.services
+﻿namespace drinks.domain.services
 {
+    using dal.@interface.services;
+    using @interface.services;
+
     public class UserService:IUserService
     {
         private readonly IUserRepository _userRepository;
