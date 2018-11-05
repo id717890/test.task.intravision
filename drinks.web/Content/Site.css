@@ -22,3 +22,20 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.drink-wrapper, .coin-wrapper {
+    display: flex;
+    justify-content: space-around;
+    flex-flow: row wrap;
+}
+
+.drink-panel, .coin-panel {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.drink-panel .img {
+    height: 120px !important;
+    width: auto;
+}

@@ -54,11 +54,11 @@ namespace drinks.api.Controllers
 
         [HttpPost]
         [Route("GetCoins")]
-        public CoinResponse.CoinsListResponse GetDrinks()
+        public CoinsListResponse GetDrinks()
         {
             try
             {
-                return new CoinResponse.CoinsListResponse
+                return new CoinsListResponse
                 {
                     Coins = _coinService.GetAllCoins()
                 };
@@ -71,11 +71,11 @@ namespace drinks.api.Controllers
 
         [HttpPost]
         [Route("GetCoinById")]
-        public CoinResponse.ParticularCoin GetCoinById(CoinRequest.FindCoinById request)
+        public ParticularCoin GetCoinById(CoinRequest.FindCoinById request)
         {
             try
             {
-                return new CoinResponse.ParticularCoin
+                return new ParticularCoin
                 {
                     Coin = _coinService.GetCoinById(request.Id)
                 };

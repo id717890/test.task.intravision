@@ -76,7 +76,7 @@ namespace drinks.web.Controllers
                 HttpResponseMessage result = HttpService.PostAsync("api/coin/GetCoinById", request).Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    var response = result.Content.ReadAsAsync<CoinResponse.ParticularCoin>().Result;
+                    var response = result.Content.ReadAsAsync<ParticularCoin>().Result;
                     if (response.ErrorCode == 0 && string.IsNullOrEmpty(response.Message))
                     {
                         return View(new CoinViewModel.ParticularCoinModel
@@ -101,13 +101,13 @@ namespace drinks.web.Controllers
         #region Страница управления монетами
         public ActionResult Coins()
         {
-            CoinResponse.CoinsListResponse response = new CoinResponse.CoinsListResponse();
+            CoinsListResponse response = new CoinsListResponse();
             try
             {
                 HttpResponseMessage result = HttpService.PostAsync("api/coin/GetCoins", new DefaultRequest()).Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    response = result.Content.ReadAsAsync<CoinResponse.CoinsListResponse>().Result;
+                    response = result.Content.ReadAsAsync<CoinsListResponse>().Result;
                     if (response.ErrorCode == 0 && string.IsNullOrEmpty(response.Message))
                     {
                         CoinViewModel.CoinList coins = new CoinViewModel.CoinList
@@ -332,7 +332,7 @@ namespace drinks.web.Controllers
                 drinkListResponse.ErrorCode = 2;
                 drinkListResponse.Message = ex.Message;
             }
-            return View(); ;
+            return View();
         }
         #endregion
         #endregion

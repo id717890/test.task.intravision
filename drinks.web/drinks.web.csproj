@@ -177,6 +177,7 @@
     <Compile Include="Models\CoinViewModel.cs" />
     <Compile Include="Models\DrinkViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\MachineViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

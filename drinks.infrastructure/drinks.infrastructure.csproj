@@ -58,10 +58,12 @@
     <Compile Include="Request\CoinRequest.cs" />
     <Compile Include="Request\DefaultRequest.cs" />
     <Compile Include="Request\DrinkRequest.cs" />
+    <Compile Include="Request\BuyRequest.cs" />
     <Compile Include="Response\BaseResponse.cs" />
     <Compile Include="Response\CoinResponse.cs" />
     <Compile Include="Response\DefaultResponse.cs" />
     <Compile Include="Response\DrinkResponse.cs" />
+    <Compile Include="Response\MachineResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
