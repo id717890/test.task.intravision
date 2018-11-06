@@ -107,6 +107,7 @@
         public ActionResult CancelPaid()
         {
             Session.Remove("paid");
+            Session.Remove("coins");
             return RedirectToAction("Index", "Home");
         }
 

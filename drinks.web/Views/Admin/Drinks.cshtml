@@ -28,48 +28,63 @@
         }
         <table class="table table-condensed table-hover table-responsive table-striped" id="demands">
             <colgroup>
-                <col class="width-30" />
                 <col />
                 <col />
                 <col />
                 <col />
-                <col class="width-30" style="width: 50px !important;" />
+                <col />
+                <col style="width: 50px !important;" />
             </colgroup>
             <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Наименование напитка</th>
-                    <th>Цена</th>
-                    <th>Кол-во</th>
-                    <th>Изображение</th>
-                    <th></th>
-                </tr>
+            <tr>
+                <th>#</th>
+                <th>Наименование напитка</th>
+                <th>Цена</th>
+                <th>Кол-во</th>
+                <th>Изображение</th>
+                <th></th>
+            </tr>
             </thead>
             <tbody>
-                @if (Model.Drinks.Any())
+            @if (Model.Drinks.Any())
+            {
+                var i = 1;
+                foreach (var drink in Model.Drinks)
                 {
-                    var i = 1;
-                    foreach (var drink in Model.Drinks)
-                    {
-                        <tr>
-                            <td>@i</td>
-                            <td>@drink.Caption</td>
-                            <td>@drink.Cost</td>
-                            <td>@drink.Count</td>
-                            <td><img src="/Images/@drink.Image" height="100"/></td>
-                            <td>
-                                <a href="@Url.Action("EditDrink", "Admin", new {id = drink.Id,})" title="Редактировать"><i class="fa fa-pencil-alt fa-lg"></i></a>
-                                <a href="@Url.Action("RemoveDrink", "Admin", new {id = drink.Id, caption = drink.Caption })" title="Удалить" style="color: red"><i class="fa fa-times fa-lg"></i></a>
-                            </td>
-                        </tr>
-                        i++;
-                    }
+                    <tr>
+                        <td>@i</td>
+                        <td>@drink.Caption</td>
+                        <td>@drink.Cost</td>
+                        <td>@drink.Count</td>
+                        <td><img src="/Images/@drink.Image" height="100"/></td>
+                        <td>
+                            <a href="@Url.Action("EditDrink", "Admin", new {id = drink.Id,})" title="Редактировать"><i class="fa fa-pencil-alt fa-lg"></i></a>
+                            <a href="@Url.Action("RemoveDrink", "Admin", new {id = drink.Id, caption = drink.Caption })" title="Удалить" style="color: red"><i class="fa fa-times fa-lg"></i></a>
+                        </td>
+                    </tr>
+                    i++;
                 }
-                else
-                {
-                    <tr><td colspan="3" style="text-align: center">Напитки отсутствуют</td></tr>
-                }
+            }
+            else
+            {
+                <tr><td colspan="6" style="text-align: center">Напитки отсутствуют</td></tr>
+            }
             </tbody>
         </table>
+    </div>
+    <div class="col-xs-12">
+    @using (Html.BeginForm("ImportDrinksFromExcel", "Admin", FormMethod.Post, new { @class = "", role = "form", enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.Label("Импорт файла", new { @class = "control-label", @style = "text-align: left" })
+            <input type="file" required name="ExcelFile"/>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Начать импорт" class="btn btn-success" />
+        </div>
+    }
     </div>
 </div>

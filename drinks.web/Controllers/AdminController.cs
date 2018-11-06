@@ -1,4 +1,9 @@
-﻿namespace drinks.web.Controllers
+﻿using System.Collections.Generic;
+using System.Linq;
+using drinks.domain.@interface.entities;
+using OfficeOpenXml;
+
+namespace drinks.web.Controllers
 {
     using infrastructure;
     using infrastructure.Request;
@@ -131,6 +136,73 @@
         #endregion
 
         #region НАПИТКИ
+
+        [HttpPost]
+        public ActionResult ImportDrinksFromExcel(DrinkViewModel.ImportFromExcel model)
+        {
+            if (Request.Files.Count > 0)
+            {
+                try
+                {
+                    var drinkList = new List<Drink>();
+                    using (var excel = new ExcelPackage(Request.Files[0].InputStream))
+                    {
+                        var sheet = excel.Workbook.Worksheets.First();
+                        for (var rowNum = 2; rowNum <= sheet.Dimension.End.Row; rowNum++)
+                        {
+                            try
+                            {
+                                var newDrink = new Drink();
+                                newDrink.Caption = !string.IsNullOrEmpty(sheet.Cells[rowNum, 1].Text)
+                                    ? sheet.Cells[rowNum, 1].Text
+                                    : "Не определено";
+
+                                int number;
+
+                                //Пытаемся парсить ячейку с ценой
+                                bool success = Int32.TryParse(sheet.Cells[rowNum, 2].Text, out number);
+                                newDrink.Cost = success ? number : 0;
+
+                                //Пытаемся парсить ячейку с ценой
+                                success = Int32.TryParse(sheet.Cells[rowNum, 3].Text, out number);
+                                newDrink.Count = success ? number : 0;
+
+                                newDrink.Image = !string.IsNullOrEmpty(sheet.Cells[rowNum, 4].Text)
+                                    ? sheet.Cells[rowNum, 4].Text
+                                    : "empty";
+                                drinkList.Add(newDrink);
+                            }
+                            catch { }
+                        }
+                    }
+
+                    DrinkRequest.ImportDrinkList request = new DrinkRequest.ImportDrinkList
+                    {
+                        Drinks = drinkList
+                    };
+                    HttpResponseMessage result = HttpService.PostAsync("api/drink/SaveDrinkList", request).Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var response = result.Content.ReadAsAsync<DefaultResponse>().Result;
+                        if (response.ErrorCode == 0 && string.IsNullOrEmpty(response.Message))
+                        {
+                            TempData["success"] = "Импорт завершен";
+                        }
+                    }
+                    else
+                    {
+                        TempData["errors"] = "Ошибка при импорте данных";
+                    }
+                }
+                catch (Exception e)
+                {
+                    TempData["errors"] = e.Message;
+                }
+                return RedirectToAction("Drinks", "Admin");
+            }
+            return RedirectToAction("Drinks", "Admin");
+        }
+
         #region HTTP_GET - Удаление напитка
         [HttpGet]
         public ActionResult RemoveDrink(long id, string caption)

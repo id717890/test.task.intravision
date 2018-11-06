@@ -15,7 +15,7 @@
     }
     @if (TempData["errors"] != null)
     {
-        <div class="col-xs-12"  style="margin-top: 25px">
+        <div class="col-xs-12" style="margin-top: 25px">
             <div class="alert alert-danger">
                 <p>@TempData["errors"].ToString()</p>
             </div>
@@ -24,7 +24,7 @@
     <div class="col-xs-12" style="margin-top: 25px">
         <div class="form-group text-center">
             <a href="@Url.Action("BuyDrink", "Home", new {cost = Model.TotalCost})" class="btn btn-lg btn-primary" style="width: 150px;"><i class="fa fa-dollar-sign"> Купить</i></a>
-            <a href="@Url.Action("ResetAll", "Home")" class="btn btn-lg btn-warning"  style="width: 150px;"><i class="fa fa-eraser"> Reset ALL</i></a>
+            <a href="@Url.Action("ResetAll", "Home")" class="btn btn-lg btn-warning" style="width: 150px;"><i class="fa fa-eraser"> Reset ALL</i></a>
         </div>
     </div>
 
@@ -59,30 +59,30 @@
                     <div class="coin-wrapper panel panel-default" style="padding-top: 20px">
                         @foreach (var coin in Model.Coins)
                         {
-                        <div class="coin-panel">
-                            <img src="/Content/images/@coin.Image" height="105" />
-                            <h3>@coin.Caption</h3>
-                            @if (coin.IsAllowed)
-    {
-                        <a href="@Url.Action("PayCoin", "Home", new {id = coin.Id, value = coin.Value})" class="btn btn-lg btn-success"><i class="fa fa-ruble-sign"> Внести</i></a>
-}
-else
-{
-                        <p style="color: orangered">
-                            Данные монеты <br /> не принимаются
-                        </p>
-}
-                            <br />
-                            <p>Кол-во монет в автомате</p>
-                            <p>@coin.Count</p>
-                        </div>
+                            <div class="coin-panel">
+                                <img src="/Content/images/@coin.Image" height="105" />
+                                <h3>@coin.Caption</h3>
+                                @if (coin.IsAllowed)
+                                {
+                                    <a href="@Url.Action("PayCoin", "Home", new {id = coin.Id, value = coin.Value})" class="btn btn-lg btn-success"><i class="fa fa-ruble-sign"> Внести</i></a>
+                                }
+                                else
+                                {
+                                    <p style="color: orangered">
+                                        Данные монеты <br /> не принимаются
+                                    </p>
+                                }
+                                <br />
+                                <p>Кол-во монет в автомате</p>
+                                <p>@coin.Count</p>
+                            </div>
                         }
                     </div>
                 }
             }
             else
             {
-                <h2>Монеты не инициализированы</h2>
+                <h2>Монеты отсутствуют</h2>
             }
         </div>
 
@@ -94,75 +94,40 @@ else
                     <div class="drink-wrapper panel panel-default" style="margin-top: 40px; padding-top: 20px">
                         @foreach (var drink in Model.Drinks)
                         {
-                        <div class="panel drink-panel">
-                            <p>@drink.Caption</p>
-                            <p style="font-weight: bold">Цена: @drink.Cost руб.</p>
-                            <img class="img" src="/Images/@drink.Image" />
-                            <br />
-                            <p>Кол-во</p>
-                            <p>@drink.Count</p>
-                            @if (drink.Count > 0)
-    {
-        if (Model.Basket != null && Model.Basket.Contains(Convert.ToInt32(drink.Id)))
-        {
-                        <a href="@Url.Action("RemoveDrinkFromBasket", "Home", new { value = drink.Id })" class="btn btn-lg btn-default"><i class="fa fa-shopping-basket"> Отменить</i></a>
-}
-else
-{
-                        <a href="@Url.Action("AddDrinkToBasket", "Home", new { value = drink.Id })" class="btn btn-lg btn-danger"><i class="fa fa-shopping-basket"> В корзину</i></a>
-}
-}
-else
-{
-                        <p style="color: orangered">Данный напиток <br /> закончился</p>
-}
-                        </div>
+                            <div class="panel drink-panel">
+                                <p>@drink.Caption</p>
+                                <p style="font-weight: bold">Цена: @drink.Cost руб.</p>
+                                <img class="img" src="/Images/@drink.Image" />
+                                <br />
+                                <p>Кол-во</p>
+                                <p>@drink.Count</p>
+                                @if (drink.Count > 0)
+                                {
+                                    if (Model.Basket != null && Model.Basket.Contains(Convert.ToInt32(drink.Id)))
+                                    {
+                                        <a href="@Url.Action("RemoveDrinkFromBasket", "Home", new { value = drink.Id })" class="btn btn-lg btn-default"><i class="fa fa-shopping-basket"> Отменить</i></a>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Action("AddDrinkToBasket", "Home", new { value = drink.Id })" class="btn btn-lg btn-danger"><i class="fa fa-shopping-basket"> В корзину</i></a>
+                                    }
+                                }
+                                else
+                                {
+                                    <p style="color: orangered">Данный напиток <br /> закончился</p>
+                                }
+                            </div>
                         }
                     </div>
                 }
                 else
                 {
-                    <h2>Монеты отсутствуют</h2>
+                    <h2>Напитки отсутствуют</h2>
                 }
-
-
-
-
-                @*<table class="table table-condensed table-hover table-responsive table-striped">
-                        <colgroup>
-                            <col />
-                            <col />
-                            <col />
-                        </colgroup>
-                        <thead>
-                            <tr>
-                                <th colspan="3">Напитки</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if (Model.Drinks.Any())
-                            {
-                                foreach (var drink in Model.Drinks)
-                                {
-                                    <tr>
-                                        <td><img src="/Images/@drink.Image"/></td>
-                                        <td>@drink.Caption</td>
-                                        <td>
-                                            <a href="#" class="btn btn-lg btn-danger">КУПИТЬ</a>
-                                        </td>
-                                    </tr>
-                                }
-                            }
-                            else
-                            {
-                                <tr><td colspan="3" style="text-align: center">Монеты отсутствуют</td></tr>
-                            }
-                        </tbody>
-                    </table>*@
             }
             else
             {
-                <h2>Монеты не инициализированы</h2>
+                    <h2>Напитки отсутствуют</h2>
             }
         </div>
 

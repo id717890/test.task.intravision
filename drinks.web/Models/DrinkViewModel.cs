@@ -55,5 +55,10 @@ namespace drinks.web.Models
             public HttpPostedFileBase ImageFile { get; set; }
 
         }
+
+        public class ImportFromExcel
+        {
+            public HttpPostedFileBase ExcelFile { get; set; }
+        }
     }
 }

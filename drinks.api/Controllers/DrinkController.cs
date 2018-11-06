@@ -1,4 +1,6 @@
-﻿namespace drinks.api.Controllers
+﻿using System.Linq;
+
+namespace drinks.api.Controllers
 {
     using domain.@interface.services;
     using infrastructure.Response;
@@ -19,6 +21,41 @@
         public DrinkController(IDrinkService service)
         {
             _drinkService = service;
+        }
+
+        [HttpPost, Route("SaveDrinkList")]
+        public DefaultResponse SaveDrinkList(DrinkRequest.ImportDrinkList request)
+        {
+            try
+            {
+                if (request.Drinks != null && request.Drinks.Any())
+                {
+                    foreach (var drink in request.Drinks)
+                    {
+                        try
+                        {
+                            _drinkService.Create(drink.Caption, drink.Image, drink.Cost, drink.Count);
+                        }
+                        catch
+                        {
+                            // ignored
+                        }
+                    }
+                }
+                return new DefaultResponse
+                {
+                    Message = string.Empty,
+                    ErrorCode = 0
+                };
+            }
+            catch (Exception e)
+            {
+                return new DefaultResponse
+                {
+                    Message = e.Message,
+                    ErrorCode = 2
+                };
+            }
         }
 
         /// <summary>
