@@ -231,7 +231,7 @@
                 response.ErrorCode = 2;
                 response.Message = ex.Message;
             }
-            return View();
+            return View("Index");
         }
 
     }
